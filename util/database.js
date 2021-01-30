@@ -1,9 +1,14 @@
-const MongoClient = require('mongodb').MongoClient;
+const { MongoClient } = require('mongodb');
+
+const DB_USERNAME = process.env.DB_USERNAME;
+const DB_PASSWORD = process.env.DB_PASSWORD;
+const DB_HOST = process.env.DB_HOST;
+const DB_NAME = process.env.DB_NAME;
 
 let _db;
 
 const client = new MongoClient(
-    'mongodb+srv://nodejs-application:Matlindo3-@clustes-de-testes.njrgo.mongodb.net/test?retryWrites=true&w=majority',
+    `mongodb+srv://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}?retryWrites=true&w=majority`,
     { useNewUrlParser: true });
 
 const MongoConnect = callback => {
@@ -11,7 +16,7 @@ const MongoConnect = callback => {
         if (err) throw err;
 
         _db = client.db();
-        console.log('connected, result of err => ');
+        console.log('connected to MongoDB.');
         callback();
     });
 }
