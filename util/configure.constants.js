@@ -1,6 +1,9 @@
+const PORT = process.env.SV_PORT;
+const HOST = process.env.SV_HOST;
+
 module.exports = {
-    PORT: 3000,
-    HOST: 'localhost',
+    PORT,
+    HOST,
     INITIAL_CALLBACK: (host, port) => {
         console.log(`Server starts at http://${host}:${port}/ `);
     },
