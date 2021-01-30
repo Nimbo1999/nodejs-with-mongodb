@@ -1,26 +1,47 @@
 const Product = require('../models/Product');
+const { ProductToResponse, ProductFromRequest } = require('../adapters/products');
 
 exports.postProduct = async (req, res) => {
     const product = new Product(req.body);
-    res.send(await product.saveOrUpdate());
+    res.send(ProductToResponse(await product.save()));
 };
 
 exports.getAllProducts = async (_, res) => {
-    const products = await Product.fetchAll();
+    const fetchedProducts = await Product.find();
+
+    const products = fetchedProducts.map(product => ProductToResponse(product));
+
     res.send({ products });
 };
 
 exports.getOneProduct = async (req, res) => {
     const product = await Product.findById(req.params.id);
-    res.send({ product });
+    res.send({ product: ProductToResponse(product) });
 };
 
-exports.updateProduct = async (req, res) => {
-    const product = new Product(req.body);
-    res.send(await product.saveOrUpdate());
+exports.updateProduct = (req, res) => {
+
+    const responseProduct = ProductFromRequest(req.body);
+
+    Product.findById(responseProduct._id).then(async product => {
+
+        product.title = responseProduct.title;
+        product.price = responseProduct.price;
+        product.description = responseProduct.description;
+        product.imageUrl = responseProduct.imageUrl;
+        
+        res.send(ProductToResponse(await product.save()));
+    }).catch(err => {
+        res.send('error');
+        console.log(err);
+    });
 };
 
-exports.deleteProduct = async (req, res) => {
-    const response = await Product.deleteById(req.params.id)
-    res.send(response);
+exports.deleteProduct = (req, res) => {
+    Product.findByIdAndRemove(req.params.id, { useFindAndModify: false }).then(result => {
+        res.send(ProductToResponse(result));
+    }).catch(err => {
+        res.send('error');
+        console.log(err);
+    });
 };

@@ -4,7 +4,7 @@ const HOST = process.env.SV_HOST;
 module.exports = {
     PORT,
     HOST,
-    INITIAL_CALLBACK: (host, port) => {
+    INITIAL_CALLBACK: (port, host) => {
         console.log(`Server starts at http://${host}:${port}/ `);
     },
 

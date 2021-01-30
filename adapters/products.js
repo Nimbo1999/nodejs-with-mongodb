@@ -1,5 +1,5 @@
-const Products = product => {
-    const { _id, ...rest } = product;
+const ProductToResponse = product => {
+    const { _doc: { _id, __v, ...rest } } = product;
 
     return {
         id: _id,
@@ -7,4 +7,13 @@ const Products = product => {
     }
 }
 
-module.exports = Products;
+const ProductFromRequest = product => {
+    const { id, ...rest } = product;
+
+    return {
+        _id: id,
+        ...rest
+    }
+}
+
+module.exports = { ProductToResponse, ProductFromRequest };
