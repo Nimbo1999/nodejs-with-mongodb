@@ -1,14 +1,14 @@
-// const { Router } = require('express');
-// const UserController = require('../controllers/users');
+const { Router } = require('express');
+const UserController = require('../controllers/users');
 
-// const userRoutes = Router();
+const userRoutes = Router();
 
-// userRoutes.post('/', UserController.saveOrUpdate);
+userRoutes.post('/', UserController.save);
 
-// userRoutes.put('/:id', UserController.saveOrUpdate);
+userRoutes.put('/', UserController.update);
 
-// userRoutes.get('/', UserController.fetchAll);
+userRoutes.get('/', UserController.fetchAll);
 
-// userRoutes.get('/:id', UserController.findById);
+userRoutes.get('/:id', UserController.findById);
 
-// module.exports = userRoutes;
+module.exports = userRoutes;

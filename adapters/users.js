@@ -1,5 +1,5 @@
-const User = user => {
-    const { _id, ...rest } = user;
+const UserToResponse = user => {
+    const { _doc: { _id, __v, ...rest } } = user;
 
     return {
         id: _id,
@@ -7,4 +7,13 @@ const User = user => {
     }
 }
 
-module.exports = User;
+const UserFromRequest = user => {
+    const { id, ...rest } = user;
+
+    return {
+        _id: id,
+        ...rest
+    }
+}
+
+module.exports = { UserToResponse, UserFromRequest };

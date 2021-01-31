@@ -3,14 +3,14 @@ const ProductsController = require('../controllers/products');
 
 const Route = Router();
 
-Route.post('/', ProductsController.postProduct);
+Route.post('/', ProductsController.save);
 
-Route.get('/', ProductsController.getAllProducts);
+Route.get('/', ProductsController.fetchAll);
 
-Route.get('/:id', ProductsController.getOneProduct);
+Route.get('/:id', ProductsController.findById);
 
-Route.put('/', ProductsController.updateProduct);
+Route.put('/', ProductsController.update);
 
-Route.delete('/:id', ProductsController.deleteProduct);
+Route.delete('/:id', ProductsController.delete);
 
 module.exports = Route;
