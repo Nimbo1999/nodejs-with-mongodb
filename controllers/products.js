@@ -16,7 +16,7 @@ exports.fetchAll = async (_, res) => {
 
 exports.findById = async (req, res) => {
     const product = await Product.findById(req.params.id);
-    res.send({ product: ProductToResponse(product) });
+    res.send(ProductToResponse(product));
 };
 
 exports.update = (req, res) => {
