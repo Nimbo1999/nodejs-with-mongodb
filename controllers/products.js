@@ -1,9 +1,25 @@
+const Mongoose = require('mongoose');
 const Product = require('../models/Product');
 const { ProductToResponse, ProductFromRequest } = require('../adapters/products');
 
-exports.save = async (req, res) => {
+exports.save = (req, res) => {
     const product = new Product(req.body);
-    res.send(ProductToResponse(await product.save()));
+    product.save().then(doc => {
+        res.send(ProductToResponse(doc));
+    })
+    .catch(err => {
+        if (err instanceof Mongoose.Error) {
+            const { errors } = err;
+
+            for(key in errors) {
+                const { message, type, path } = errors[key].properties;
+                res.status(400).send({ message, type, path });
+            }
+        } else {
+            res.status(400).send({ error: err });
+        }
+
+    })
 };
 
 exports.fetchAll = async (_, res) => {
