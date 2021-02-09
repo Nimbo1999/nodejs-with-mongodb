@@ -2,18 +2,18 @@ const { Schema, model } = require('mongoose');
 
 const userSchema = new Schema({
     fullName: {
-        type: String,
+        type: Schema.Types.String,
         required: true,
     },
     email: {
-        type: String,
+        type: Schema.Types.String,
         required: true
     },
     cart: {
         items: [
             {
-                productId: { type: Schema.Types.ObjectId, required: true },
-                quantity: { type: Number, required: true }
+                productId: { type: Schema.Types.ObjectId, required: true, ref: 'Product' },
+                quantity: { type: Schema.Types.Number, required: true }
             }
         ],
         required: false

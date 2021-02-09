@@ -16,6 +16,11 @@ const productSchema = new Schema({
         type: Schema.Types.String,
         required: true,
     },
+    userId: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
+    }
 });
 
 module.exports = model('Product', productSchema);
