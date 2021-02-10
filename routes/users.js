@@ -11,4 +11,6 @@ userRoutes.get('/', UserController.fetchAll);
 
 userRoutes.get('/:id', UserController.findById);
 
+userRoutes.post('/cart', UserController.addToCart);
+
 module.exports = userRoutes;

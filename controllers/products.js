@@ -14,6 +14,7 @@ exports.save = (req, res) => {
             for(key in errors) {
                 const { message, type, path } = errors[key].properties;
                 res.status(400).send({ message, type, path });
+                break;
             }
         } else {
             res.status(400).send({ error: err });
@@ -32,6 +33,7 @@ exports.fetchAll = async (_, res) => {
 
 exports.findById = async (req, res) => {
     const product = await Product.findById(req.params.id);
+    // .populate('userId');
     res.send(ProductToResponse(product));
 };
 

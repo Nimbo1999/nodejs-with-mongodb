@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const Products = require('../models/Product');
 const { UserFromRequest, UserToResponse } = require('../adapters/users');
 
 exports.save = (req, res) => {
@@ -39,4 +40,26 @@ exports.findById = (req, res) => {
         console.log(err);
         res.status(404).send({ error: true, content: err.message });
     });
+};
+
+exports.addToCart = async (req, res) => {
+    const user = new User(await User.findById(req.body.userId));
+    user.addToCart(await Products.findById(req.body.productId)).then(user => {
+        res.send(UserToResponse(user));
+    })
+    .catch(err => {
+        if (err instanceof Mongoose.Error) {
+            const { errors } = err;
+
+            for(key in errors) {
+                const { message, type, path } = errors[key].properties;
+                res.status(400).send({ message, type, path });
+                break;
+            }
+        } else {
+            res.status(400).send({ error: err });
+        }
+    });
+
+
 };
