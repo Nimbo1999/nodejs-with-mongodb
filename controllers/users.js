@@ -63,3 +63,10 @@ exports.addToCart = async (req, res) => {
 
 
 };
+
+exports.getCart = (req, res) => {
+    User.findById(req.params.id).populate('cart.items.productId').then(user => {
+        console.log(user);
+        res.send(user.cart);
+    })
+}
