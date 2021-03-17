@@ -111,3 +111,11 @@ exports.createOrder = async (req, res) => {
         }
     })
 }
+
+exports.getOrders = async (req, res) => {
+    Orders.find({ user: req.params.id }).then(orders => res.send(orders))
+        .catch(err => {
+            console.error(err);
+            res.send('error');
+        });
+}

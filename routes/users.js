@@ -19,4 +19,6 @@ userRoutes.delete('/:userId/cart/:productId', UserController.removeItemFromCart)
 
 userRoutes.post('/order', UserController.createOrder);
 
+userRoutes.get('/orders/:id', UserController.getOrders);
+
 module.exports = userRoutes;
