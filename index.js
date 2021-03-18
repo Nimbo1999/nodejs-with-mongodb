@@ -2,24 +2,29 @@ require('dotenv').config();
 
 const express = require('express');
 const mongoose = require('mongoose');
+const session = require('express-session');
 
 const CONFIG_CONSTANTS = require('./util/configure.constants');
 
 const ProductsRoutes = require('./routes/products');
 const UsersRoutes = require('./routes/users');
+const AuthRoutes = require('./routes/auth');
 
 const app = express();
 
 app.use(express.json({}));
+app.use(session({ secret: 'my secrete', resave: false, saveUninitialized: false }));
 
 app.use('/products', ProductsRoutes);
 app.use('/users', UsersRoutes);
+app.use('/auth', AuthRoutes);
 
 app.get('/', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
     res.send({
         version: CONFIG_CONSTANTS.VERSION,
-        app_name: CONFIG_CONSTANTS.APP_NAME
+        app_name: CONFIG_CONSTANTS.APP_NAME,
+        session: req.session
     });
 });
 
